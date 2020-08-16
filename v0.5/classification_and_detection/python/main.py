@@ -109,6 +109,13 @@ SUPPORTED_PROFILES = {
         "backend": "tensorflow",
         "model-name": "ssd-mobilenet",
     },
+    "ssd-mobilenet-tfserving": {
+        "inputs": "inputs",
+        "outputs": "num_detections,detection_boxes,detection_scores,detection_classes",
+        "dataset": "coco-300",
+        "backend": "tensorflow",
+        "model-name": "ssd-mobilenet",
+    },
     "ssd-mobilenet-pytorch": {
         "inputs": "image",
         "outputs": "bboxes,labels,scores",
@@ -242,6 +249,9 @@ def get_backend(backend):
     elif backend == "tflite":
         from backend_tflite import BackendTflite
         backend = BackendTflite()
+    elif backend == "tfserving":
+        from backend_tfserving import BackendTFServing
+        backend = BackendTFServing()
     else:
         raise ValueError("unknown backend: " + backend)
     return backend
